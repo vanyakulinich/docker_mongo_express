@@ -32,6 +32,7 @@ services:
       - SERVER_PORT
       - MONGO_PORT
       - MONGO_HOST
+      - MONGO_DATABASE
     depends_on:
       - mongo_database
     networks:

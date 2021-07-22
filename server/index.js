@@ -1,7 +1,8 @@
 const MongoClient = require('mongodb').MongoClient
+const server = require('express')()
 
 MongoClient.connect(
-  `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/test`,
+  `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${MONGO_DATABASE}`,
   function (err, db) {
     if (err) {
       throw err
@@ -9,8 +10,6 @@ MongoClient.connect(
     console.log(`%cMONGO CONNECTED`, 'color:yellow')
   }
 )
-
-const server = require('express')()
 
 server.get('/', (req, res) => {
   res.sendStatus(200)
