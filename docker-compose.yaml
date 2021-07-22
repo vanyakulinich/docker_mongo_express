@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  mongo_database:
+    container_name: mongo_database
+    image: mongo
+    ports:
+      - ${MONGO_PORT}:${MONGO_PORT}
+    volumes:
+      - ./mongo_database:/data/db
+    networks:
+      - backend
+
+  server:
+    container_name: server
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+      args:
+        - SERVER_PORT
+        - MONGO_PORT
+        - MONGO_HOST
+    volumes:
+      - ./server:/var/www/backend
+      - ./server/node_modules:/var/www/backend/node_modules
+    restart: always
+    links:
+      - mongo_database:${MONGO_HOST}
+    environment:
+      - SERVER_PORT
+      - MONGO_PORT
+      - MONGO_HOST
+    depends_on:
+      - mongo_database
+    networks:
+      - backend
+
+networks:
+  backend:
