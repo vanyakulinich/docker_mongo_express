@@ -18,10 +18,11 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
-      args:
-        - SERVER_PORT
-        - MONGO_PORT
-        - MONGO_HOST
+      # in case you need to pass envs inside dockerfile       
+      # args:
+      #  - SERVER_PORT
+      #  - MONGO_PORT
+      #  - MONGO_HOST
     volumes:
       - ./server:/var/www/backend
       - ./server/node_modules:/var/www/backend/node_modules
